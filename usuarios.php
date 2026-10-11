@@ -109,7 +109,7 @@ encabezado('usuarios', 'Usuarios');
   </div>
   <button class="btn btn-oro" type="button" data-abrir="dlg-form">Inscribir usuario</button>
 </div>
-<div class="filete reveal" style="--i:1" aria-hidden="true"></div>
+<div class="filete abre-filete" aria-hidden="true"></div>
 
 <form class="buscar reveal" style="--i:2" method="get" action="<?= ARCHIVO ?>" role="search">
   <input type="search" name="q" value="<?= h($q) ?>" placeholder="Buscar por nombre, cédula o teléfono" aria-label="Buscar usuarios">
@@ -119,6 +119,7 @@ encabezado('usuarios', 'Usuarios');
 
 <?php if (!$usuarios): ?>
   <div class="vacio reveal" style="--i:3">
+    <?= ilustracion_vacia() ?>
     <?php if ($q !== ''): ?>
       <p>Ningún usuario coincide con "<?= h($q) ?>".</p>
     <?php else: ?>
@@ -134,7 +135,7 @@ encabezado('usuarios', 'Usuarios');
       <?php foreach ($usuarios as $n => $u):
           $datos = ['id' => $u['cedula'], 'cedula' => $u['cedula'], 'nombre' => $u['nombre'], 'telefono' => $u['telefono']];
       ?>
-        <tr style="--r:<?= $n ?>">
+        <tr class="sr" style="--r:<?= $n ?>">
           <td data-label="Cédula"><span class="isbn"><?= h($u['cedula']) ?></span></td>
           <td data-label="Nombre"><span class="titulo-libro"><?= h($u['nombre']) ?></span></td>
           <td data-label="Teléfono"><?= h($u['telefono']) ?></td>

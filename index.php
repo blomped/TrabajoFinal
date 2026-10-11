@@ -147,7 +147,22 @@ encabezado('prestamos', 'Préstamos');
   </div>
   <button class="btn btn-oro" type="button" data-abrir="dlg-form">Registrar préstamo</button>
 </div>
-<div class="filete reveal" style="--i:1" aria-hidden="true"></div>
+<div class="filete abre-filete" aria-hidden="true"></div>
+
+<section class="medallones sr" aria-label="Resumen de la biblioteca">
+  <?php foreach ([[$totalGeneral, 'Préstamos'], [count($catalogo), 'Libros'], [count($usuarios), 'Lectores']] as $mi => [$mn, $mt]): ?>
+    <article class="medallon" style="--i:<?= $mi ?>">
+      <div class="disco">
+        <svg class="aro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="none" stroke="#b8862b" stroke-width="1.400" stroke-dasharray="2 5" stroke-linecap="round"/></svg>
+        <svg class="aro aro2" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="none" stroke="#c99a3a" stroke-width="1.600" stroke-dasharray="16 7 3 7" stroke-linecap="round"/></svg>
+        <b class="dorado" data-n="<?= (int)$mn ?>"><?= (int)$mn ?></b>
+      </div>
+      <span class="rotulo"><?= h($mt) ?></span>
+    </article>
+  <?php endforeach; ?>
+</section>
+
+<?php estanteria($catalogo); ?>
 
 <form class="buscar reveal" style="--i:2" method="get" action="<?= ARCHIVO ?>" role="search">
   <input type="search" name="q" value="<?= h($q) ?>" placeholder="Buscar por lector, cédula, libro, autor o N.º de préstamo" aria-label="Buscar préstamos">
@@ -157,6 +172,7 @@ encabezado('prestamos', 'Préstamos');
 
 <?php if (!$prestamos): ?>
   <div class="vacio reveal" style="--i:3">
+    <?= ilustracion_vacia() ?>
     <?php if ($q !== ''): ?>
       <p>Ningún préstamo coincide con "<?= h($q) ?>".</p>
     <?php elseif ($faltan): ?>
@@ -174,7 +190,8 @@ encabezado('prestamos', 'Préstamos');
         $datos = ['id' => (int)$p['id'], 'fecha' => $p['fecha_prestamo'], 'cedula' => $p['cedula'],
                   'libros' => array_map(fn($l) => (int)$l['id'], $ls)];
     ?>
-      <article class="ficha" style="--i:<?= $n ?>">
+      <article class="ficha sr" style="--i:<?= $n ?>">
+        <span class="brillo-3d" aria-hidden="true"></span>
         <header class="ficha-cab">
           <h2>N.º <?= num_ficha((int)$p['id']) ?></h2>
           <time datetime="<?= h($p['fecha_prestamo']) ?>"><?= h(fecha_larga($p['fecha_prestamo'])) ?></time>
@@ -194,6 +211,7 @@ encabezado('prestamos', 'Préstamos');
             </li>
           <?php endforeach; ?>
         </ol>
+        <div class="sello" aria-hidden="true"><b>B</b></div>
         <div class="ficha-pie">
           <button class="btn btn-cuero btn-chico" type="button" data-editar="dlg-form" data-datos="<?= h(json_encode($datos, JSON_UNESCAPED_UNICODE)) ?>">Editar</button>
           <button class="btn btn-vino btn-chico" type="button" data-eliminar data-id="<?= (int)$p['id'] ?>"

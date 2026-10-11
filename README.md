@@ -10,6 +10,14 @@ Gestiona libros, usuarios y los préstamos de una biblioteca.
 - PHP 7.4 o superior con la extensión `pdo_mysql`
 - Un servidor MySQL/MariaDB accesible
 
+## Experiencia visual
+- Puertas de cuero que se abren en 3D en la primera visita de cada sesión (se puede saltar con un clic)
+- Rayos de sol, polvo dorado flotante y una luz de vela que sigue al cursor
+- Estantería con los lomos reales del catálogo (se sacan al pasar el cursor)
+- Fichas de préstamo con sello de lacre, inclinación 3D y brillo
+- Chispas doradas en el cursor y al pulsar botones; cambio de pantalla como paso de hoja
+- Respeta la opción de "reducir movimiento" del sistema operativo
+
 ## Instalación
 1. Sube la carpeta completa a tu hosting (en AlwaysData, la carpeta `www`).
 2. Abre `index.php` en el navegador. Las tablas se crean solas la primera vez.

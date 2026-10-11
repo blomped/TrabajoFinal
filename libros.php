@@ -100,6 +100,7 @@ $st->bindValue(':off', $offset, PDO::PARAM_INT);
 $st->execute();
 $libros = $st->fetchAll();
 $totalGeneral = (int)$pdo->query('SELECT COUNT(*) FROM libros')->fetchColumn();
+$estante = $pdo->query('SELECT id, titulo, autor, isbn FROM libros ORDER BY titulo LIMIT 22')->fetchAll();
 
 encabezado('libros', 'Libros');
 ?>
@@ -110,7 +111,9 @@ encabezado('libros', 'Libros');
   </div>
   <button class="btn btn-oro" type="button" data-abrir="dlg-form">Agregar libro</button>
 </div>
-<div class="filete reveal" style="--i:1" aria-hidden="true"></div>
+<div class="filete abre-filete" aria-hidden="true"></div>
+
+<?php estanteria($estante, 'Del catálogo'); ?>
 
 <form class="buscar reveal" style="--i:2" method="get" action="<?= ARCHIVO ?>" role="search">
   <input type="search" name="q" value="<?= h($q) ?>" placeholder="Buscar por título, autor o ISBN" aria-label="Buscar libros">
@@ -120,6 +123,7 @@ encabezado('libros', 'Libros');
 
 <?php if (!$libros): ?>
   <div class="vacio reveal" style="--i:3">
+    <?= ilustracion_vacia() ?>
     <?php if ($q !== ''): ?>
       <p>Ningún libro coincide con "<?= h($q) ?>".</p>
     <?php else: ?>
@@ -135,7 +139,7 @@ encabezado('libros', 'Libros');
       <?php foreach ($libros as $n => $l):
           $datos = ['id' => (int)$l['id'], 'titulo' => $l['titulo'], 'autor' => $l['autor'], 'isbn' => $l['isbn']];
       ?>
-        <tr style="--r:<?= $n ?>">
+        <tr class="sr" style="--r:<?= $n ?>">
           <td data-label="Título"><span class="titulo-libro"><?= h($l['titulo']) ?></span></td>
           <td data-label="Autor"><?= h($l['autor']) ?></td>
           <td data-label="ISBN"><span class="isbn"><?= h($l['isbn']) ?></span></td>
